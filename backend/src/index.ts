@@ -6,7 +6,7 @@ import "dotenv/config"
 const app = express()
 
 app.use(express.json())
-app.use(route)
+app.use('/auth',route)
 
 const PORT = process.env.PORT
 app.listen(PORT , ()=>{

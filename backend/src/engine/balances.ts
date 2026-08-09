@@ -17,7 +17,7 @@ const UserWallet = new Map < number , UsersWallet > ()
 export const deposit = (userId :number , amount:number)=>{
     
     if(amount <=0){
-        throw new Error("invalid amount")
+        return ("invalid amount")
     }
     
     const userCheck = UserWallet.get(userId)
@@ -51,7 +51,8 @@ export const lockBalance = (userId:number, amount:number)=>{
     userCheck.balances.available -= amount
     userCheck.balances.locked  += amount
 
-    return userCheck
+    const message = ("balance locked")
+    return userCheck 
 }
 
 export const unlockBalance = (userId :number , amount :number) =>{

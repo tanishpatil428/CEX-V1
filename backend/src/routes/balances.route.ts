@@ -4,7 +4,7 @@ import {depositController ,getBalancesController,lockBalanceController,unlockBal
  const  balances = Router()
 
 balances.post('/deposit' , depositController)
-balances.get('/:userId' ,getBalancesController)
+balances.get('/get' ,getBalancesController)
 balances.post('/lock' ,lockBalanceController)
 balances.post('/unlock' ,unlockBalanceController)
 

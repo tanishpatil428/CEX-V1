@@ -2,7 +2,7 @@ import type{ Request,Response } from "express";
 import { deposit ,getBalance , lockBalance ,unlockBalance} from "../engine/balances";
 
 export const depositController = (req:Request ,res:Response) =>{
-    const userid = Number(req.body.userId)
+    const userid = req.userId
     const amount = Number(req.body.amount)
 
    const deposited = deposit(userid ,amount)
@@ -11,7 +11,7 @@ export const depositController = (req:Request ,res:Response) =>{
 }
 
  export const getBalancesController = (req:Request, res:Response) =>{
-    const userid = Number(req.params.userId)
+    const userid = req.userId
 
     const balance = getBalance(userid)
 
@@ -20,16 +20,16 @@ export const depositController = (req:Request ,res:Response) =>{
 
 export const lockBalanceController = (req:Request, res:Response) =>{
 
-    const userId =  Number( req.body.userId)
+    const userId =  req.userId
     const amount = Number(req.body.amount)
 
    const userBalance = lockBalance(userId,amount)
 
-    return res.status(200).json({message :"balance locked" , userBalance})
+    return res.status(200).json({ userBalance})
 }
 
 export const unlockBalanceController = (req:Request, res:Response)=>{
-    const userId = Number(req.body.userId)
+    const userId = req.userId
     const amount = Number(req.body.amount)
 
     const unlock = unlockBalance(userId ,amount)

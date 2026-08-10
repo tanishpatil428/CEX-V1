@@ -28,7 +28,7 @@ export const signup = async (req:Request, res:Response)=>{
         }
     })
 
-    const token = jwt.sign({userid:newUser.id},JWT_SECRET)
+    const token = jwt.sign({userId:newUser.id},JWT_SECRET)
 
     return res.status(201).json(token)
 }
@@ -55,7 +55,7 @@ export const signin = async (req:Request, res:Response)=>{
     
     
 
-    const token = jwt.sign({userid:userCheck.id},JWT_SECRET)
+    const token = jwt.sign({userId:userCheck.id},JWT_SECRET)
 
     return res.status(201).json(token)
 }

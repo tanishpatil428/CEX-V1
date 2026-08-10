@@ -45,13 +45,13 @@ export const lockBalance = (userId:number, amount:number)=>{
     const userCheck = UserWallet.get(userId)
 
     if(!userCheck || userCheck.balances.available <= amount){
-       return ("insufficent balance")
+       throw new Error ("insufficent balance")
     }
 
     userCheck.balances.available -= amount
     userCheck.balances.locked  += amount
 
-    const message = ("balance locked")
+  
     return userCheck 
 }
 

@@ -51,8 +51,6 @@ export const lockBalance = (userId:number, amount:number)=>{
     userCheck.balances.available -= amount
     userCheck.balances.locked  += amount
 
-  
-    return userCheck 
 }
 
 export const unlockBalance = (userId :number , amount :number) =>{
@@ -66,4 +64,15 @@ export const unlockBalance = (userId :number , amount :number) =>{
     userCheck.balances.available += amount
 
     return userCheck
+}
+
+export const lockStock = (userId:number, symbol:string, qty:number)=>{
+    const userCheck = UserWallet.get(userId)
+
+    if(!userCheck || !userCheck.stocks[symbol] || userCheck.stocks[symbol].available < qty){
+        throw new Error ("insufficent stock balance")
+    }
+
+    userCheck.stocks[symbol].available -= qty
+    userCheck.stocks[symbol].locked += qty
 }

@@ -19,7 +19,7 @@ export const authmiddleware = (req:Request, res:Response, next:NextFunction)=>{
 
         const decode = jwt.verify(token ,JWT_SECRET !) as unknown as {userId : number}
         const id = decode.userId
-        console.log(id);
+       
         
         req.userId = id
         next()

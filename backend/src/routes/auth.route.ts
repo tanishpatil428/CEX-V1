@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { signup,signin } from "../controller/auth.controller";
-import { valditation } from "../middleware/balance.validate.middleware";
+import { valditation } from "../middleware/auth.validate.middleware";
 import { signupSchema, signinSchema } from "../valditation/auth.validation";
 
  const route = Router()

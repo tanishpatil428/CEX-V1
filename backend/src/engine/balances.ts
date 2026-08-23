@@ -1,3 +1,4 @@
+import { symbol } from "zod"
 
 
 type balance = {
@@ -20,16 +21,15 @@ export const deposit = (userId :number , amount:number)=>{
         return ("invalid amount")
     }
     
-    const userCheck = UserWallet.get(userId)
+    let wallet = UserWallet.get(userId)
 
-    if(!userCheck){
-        const newWallet = {balances :{available :amount ,locked:0} ,stocks:{}}
-        UserWallet.set(userId, newWallet)
-        return newWallet
+    if(!wallet){
+        wallet = {balances :{available :0 ,locked:0} ,stocks:{}}
+        UserWallet.set(userId, wallet) 
     }
 
-    userCheck.balances.available += amount;
-    return userCheck
+    wallet.balances.available += amount;
+    return wallet
 }
 
 export const getBalance = (userId :number)=>{
@@ -76,3 +76,18 @@ export const lockStock = (userId:number, symbol:string, qty:number)=>{
     userCheck.stocks[symbol].available -= qty
     userCheck.stocks[symbol].locked += qty
 }
+
+export const depositStock =(symbol:string, qty:number, userId:number)=>{
+    const userCheck = UserWallet.get(userId)
+    if(!userCheck){
+        UserWallet.set(userId ,{balances:{available:0,locked:0},stocks:{}})
+    }
+    const walletCheck = UserWallet.get(userId)!
+    
+    if(!walletCheck.stocks[symbol]){
+        walletCheck.stocks[symbol] ={available:0,locked:0}
+    }
+    walletCheck.stocks[symbol].available += qty
+
+    return walletCheck
+}   

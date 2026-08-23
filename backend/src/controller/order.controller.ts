@@ -1,8 +1,7 @@
 import type { Request,Response } from "express";
 import {prisma} from '../db/prisma'
 import { lockBalance, lockStock } from "../engine/balances";
-
-
+import { addOrderBook,GetorderBook } from "../engine/orderbook";
 
 
 export const placeOrders =async (req:Request, res:Response)=>{
@@ -22,10 +21,11 @@ export const placeOrders =async (req:Request, res:Response)=>{
 
     if(side === "BUY"){
         const totalCost = qty*price
-       const balance = lockBalance(userId ,totalCost)
+        lockBalance(userId ,totalCost)
     }else{
         lockStock(userId,symbol,qty)
     }
+
 
     const order = await prisma.orders.create({
         data:{
@@ -39,7 +39,27 @@ export const placeOrders =async (req:Request, res:Response)=>{
             status: "PENDING"
         }
     })
-     
+
+    const orderBook ={
+        userId,
+        orderId:order.id,
+        price,
+        qty,
+        createdAt:Date.now()
+    }
+    
+    addOrderBook(symbol,side,orderBook)
+
+
+
     return res.status(202).json({message:"order placed" ,order})
 
 }
+
+ export const getBook = (req:Request, res:Response)=>{
+    const symbol = req.body.symbol
+
+   const book = GetorderBook(symbol)
+
+   return res.status(200).json(book)
+ }

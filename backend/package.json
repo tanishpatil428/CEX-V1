@@ -8,10 +8,10 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.2.0",
     "@types/pg": "^8.20.3",
     "prisma": "^7.9.1",
-    "tsx": "^4.23.5"
+    "tsx": "^4.23.12"
   },
   "peerDependencies": {
     "typescript": "^7.0.2"

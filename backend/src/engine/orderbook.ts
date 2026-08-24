@@ -15,7 +15,7 @@ type Bookorder ={
 const orderBook = new Map<string ,Bookorder >()
 
 export const GetorderBook =(symbol:string)=>{
-    const bookCheck = orderBook.get(symbol)
+    const bookCheck = orderBook.has(symbol)
     if(!bookCheck){
         orderBook.set(symbol, {BUY:[],SELL:[]})
     }

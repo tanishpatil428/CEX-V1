@@ -21,14 +21,16 @@ export const deposit = (userId :number , amount:number)=>{
         return ("invalid amount")
     }
     
-    let wallet = UserWallet.get(userId)
+    const userCheck = UserWallet.has(userId)
 
-    if(!wallet){
-        wallet = {balances :{available :0 ,locked:0} ,stocks:{}}
-        UserWallet.set(userId, wallet) 
+    if(!userCheck){
+        UserWallet.set(userId,{balances:{available:0, locked:0},stocks:{}})
     }
 
-    wallet.balances.available += amount;
+    const wallet = UserWallet.get(userId)!
+    
+    wallet.balances.available += amount
+
     return wallet
 }
 

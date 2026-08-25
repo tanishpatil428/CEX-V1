@@ -26,9 +26,9 @@ export const depositController = (req:Request ,res:Response) =>{
 export const lockBalanceController = (req:Request, res:Response) =>{
 
     const userId =  req.userId
-    const amount = Number(req.body.amount)
+    const {qty,price} = req.body
 
-   const userBalance = lockBalance(userId,amount)
+   const userBalance = lockBalance(userId,qty,price)
 
     return res.status(200).json({ userBalance})
 }

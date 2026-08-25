@@ -20,8 +20,7 @@ export const placeOrders =async (req:Request, res:Response)=>{
     }
 
     if(side === "BUY"){
-        const totalCost = qty*price
-        lockBalance(userId ,totalCost)
+        lockBalance(userId,qty,price)
     }else{
         lockStock(userId,symbol,qty)
     }
@@ -50,14 +49,21 @@ export const placeOrders =async (req:Request, res:Response)=>{
     
     addOrderBook(symbol,side,orderBook)
 
-
-
     return res.status(202).json({message:"order placed" ,order})
 
 }
 
- export const getBook = (req:Request, res:Response)=>{
-    const symbol = req.body.symbol
+ export const getBook = async(req:Request, res:Response)=>{
+    const symbol = req.params.symbol
+
+    if(!symbol ||typeof symbol !=="string"){
+        return res.status(403).json({message:"plz enter symbol"})
+    }
+
+    const stockCheck = await prisma.stocks.findUnique({where:{symbol}})
+        if(!stockCheck){
+            return res.status(403).json({message:"no stock found"})
+        }
 
    const book = GetorderBook(symbol)
 

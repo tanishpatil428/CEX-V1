@@ -1,6 +1,3 @@
-import { symbol } from "zod"
-
-
 type balance = {
     available :number,
     locked :number
@@ -43,7 +40,9 @@ export const getBalance = (userId :number)=>{
     return userCheck 
 }
 
-export const lockBalance = (userId:number, amount:number)=>{
+export const lockBalance = (userId:number, price:number, qty:number)=>{
+    const amount = qty * price
+
     const userCheck = UserWallet.get(userId)
 
     if(!userCheck || userCheck.balances.available <= amount){

@@ -1,3 +1,4 @@
+// wallet :{useid :{balance:{available:,locked:}, stockbalance:{[stock:string]:available: ,locked:}//
 type balance = {
     available :number,
     locked :number
